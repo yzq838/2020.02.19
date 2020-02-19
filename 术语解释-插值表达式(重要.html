@@ -4,32 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>实例选项-methods</title>
+    <title>Document</title>
 </head>
 
 <body>
     <div id="app">
-
+        <p>{{msg + '深'}}</p>
+        <p>{{showMessage }}</p>
+        <p>{{ list.join("").split("").reverse().join("")  }}</p>
     </div>
+
     <script src="./vue.js"></script>
     <script>
         var vm = new Vue({
-            el: "#app",
+            el: '#app',
             data: {
-                alipay: '支付宝',
-                wechat: '腾讯'
+                msg: '敲啊敲',
+                showMessage: false,
+                list: [1, 2, 3]
             },
             methods: {
-                fn1() {
-                    console.log(this.alipay);
-                    this.fn2()
-
-                },
-
-                fn2() {
-                    console.log(this.wechat);
-
-                }
 
             }
         })
