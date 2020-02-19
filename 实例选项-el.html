@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实例选项-el</title>
+</head>
+
+<body>
+    <!-- 设置管理视图 -->
+    <div id="app" class="ninefour">
+        <!-- <p>{{ name }}</p> -->
+        <p>{{ msg }}</p>
+    </div>
+    <!-- 引入 -->
+    <script src="./vue.js"></script>
+    <!-- newvue -->
+    <script>
+        var vm = new Vue({
+            // el: '#app',
+
+            // data: {
+            //     name: '跟紧老高小步跑',
+            //     msg: '敲代码这么好'
+
+            // }
+            // class方法
+            // el: '.ninefour ',
+
+            // data: {
+            //     name: '跟紧老高小步跑',
+            //     msg: '敲代码这么好'
+            // }
+            // dom方法
+            el: document.getElementById('app'),
+            data: {
+                msg: '这是个dom'
+
+            }
+
+
+
+
+
+        })
+    </script>
+</body>
+
+</html>
