@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 1.设置管理视图 -->
+    <div id="app">
+        {{ name }}
+    </div>
+    <!-- 2.引入</vue.js -->
+    <script src="./vue.js"></script>
+
+    <script>
+        // 3.实例化vue 对象new Vue
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'hello world'
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 设置vue所管理视图 -->
+    <div id="app">
+        <p> 名字： {{ name }}</p>
+        <p> 体重：{{ weight }}</p>
+        <div>
+            头发： {{ hair }}
+        </div>
+    </div>
+    <!-- 2.引入vuejs 有了全局对象-->
+    <script src="./vue.js"></script>
+
+    <script>
+        //  <!-- 3.实例化vue对象 -->
+        var vm = new Vue({
+            //    4 构造函数的参数
+            // 指的是管理视图的选择器
+            el: '#app',
+            data: {
+                name: 'hello world 我是主向量',
+                weight: '200kg',
+                hair: '1000根'
+            }
+        })
+    </script>
+</body>
+
+</html>
