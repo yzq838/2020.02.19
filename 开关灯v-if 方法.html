@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .light {
+        width: 100%;
+        height: 100vh;
+        background-color: aqua;
+        /* 1vh 就是当前可视区域的竖直高度的百分之一 */
+    }
+
+    .night {
+        width: 100%;
+        height: 100vh;
+        background-color: blueviolet;
+    }
+</style>
+
+<body>
+    <button onclick='openLight()'>开/关</button>
+    <div id="app">
+        <div v-if='light' class="light"></div>
+        <div v-if='!light' class="night"></div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                light: true
+            },
+            methods: {}
+
+
+        });
+        function openLight() {
+            数据变化视图更新
+            vm.light = !vm.light
+        }
+    </script>
+</body>
+
+</html>
