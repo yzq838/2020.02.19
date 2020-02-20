@@ -25,8 +25,10 @@
 <body>
     <button onclick='openLight()'>开/关</button>
     <div id="app">
-        <div v-if='light' class="light"></div>
-        <div v-else='light' class="night"></div>
+        <!-- <div v-if='light' class="light"></div>
+        <div v-else='light' class="night"></div> -->
+        <div v-show="light" class='light'></div>
+        <div v-show="!light" class='night'></div>
     </div>
     <script src="./vue.js"></script>
     <script>
