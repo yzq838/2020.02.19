@@ -435,8 +435,8 @@
 >         //     // e是 事件参数
 >         // }
 >     </script>
->```
->
+> ```
+> 
 > **`任务`**: 
 >
 >1. 初始化一个Vue实例, 定义data中name  为   **`Vuejs竟干出如此的事`**!
@@ -521,7 +521,7 @@
 >
 >**`任务`**: 
 >
->1. 初始化一个Vue实例=
+>1. 初始化一个Vue实例
 >2. 定义data对象中list:**`["姚明","刘翔","李娜","女排","男足"]`**
 >3. 将list中的内容 v-for循环在li标签上显示
 >
@@ -627,8 +627,8 @@
 >             methods: {}
 >        });
 >     </script>
->```
->
+> ```
+> 
 
 ## 基础-表格案例-效果演示
 
@@ -864,12 +864,12 @@ v-model是Vuejs双向数据流的体现
 
 > **`目标`**掌握 v-cloak/ v-once / v-pre 指令的使用
 >
-> **`v-cloak`**
+> **`v-cloak`**  
 >
 > * 场景: 当页面初次渲染, 页面模板闪屏现象,可以用v-cloak解决
 >
->        1. 编写元素标签
->           2.  写入v-cloak指令
+>           1. 编写元素标签
+>           2. 写入v-cloak指令
 >           3. 将v-cloak指令 属性加上style
 >
 >    **`注意`**  可以一次性 将v-cloak引用在实例视图上  避免多次写入标签
@@ -895,7 +895,7 @@ v-model是Vuejs双向数据流的体现
 >
 > 1. 使用v-cloak解决页面闪烁问题
 >
-> **`v-once`**
+> **`v-once`** 
 >
 > 场景:  当只需要对数据进行首次渲染的时候,可以采用v-once指令
 >
@@ -907,7 +907,9 @@ v-model是Vuejs双向数据流的体现
 > <div v-once>{{ name }}</div>
 > ```
 >
-> v-pre
+> **`注意`** **`千万不要`**在你的根元素上写v-once, 因为写之后, 就会造成整个的vue视图 没有更新
+>
+> **`v-pre`** 
 >
 > 场景: 假如你不希望Vue对你节点下的内容进行编译渲染,可以使用v-pre 指令让渲染**`跳过`**该节点
 >
@@ -917,59 +919,106 @@ v-model是Vuejs双向数据流的体现
 
 **`任务`**
 
-## 基础-表格案例-添加商品
+## 基础-表格案例-添加数据
 
 >**`目标- 任务`**  实现在表格案例中 添加商品
 >
 >**`路径`**:  添加商品 
 >
->1. 注册点击按钮事件
+>1. 注册点击按钮事件, 绑定添加方法
 >2. 声明一个变量 v-model双向绑定 input
 >3.  添加方法中 unshift添加数据
 >4. 清空 输入框
 >5.   通过v-bind:disabled控制按钮是否可点
+>
+>(指令)v-model => 也有修饰符
+>
+>**`指令.修饰符 = "表达式"`**
+>
+>**`v-model.trim`** = "变量"  =>trim  输入首尾空格过滤
 
-## 基础-表格案例-删除商品
+## 基础-表格案例-删除删除
 
 >**`目标- 任务`**  实现在表格案例中 删除商品
 >
 >**`路径`**:  删除商品 
 >
->    1. 注册删除点击事件
+>   1. 注册删除点击事件
 >
 >​    2.通过方法传递当前删除的索引
 >
->​    3. 实现删除逻辑
+>    3. 实现删除逻辑
+>
+>```js
+>        // 删除元素的方法
+>        delItem(i) {
+>          // 需要知道删除谁 
+>          // 根据 索引 从数组中移除数据
+>          if (confirm("您是否要删除此条数据?")) {
+>            // 如果确定要删除了
+>            // this.list.splice(i, 1) // 移除数据 第一种
+>            // filter是返回一个新数组 
+>            // filter方法 filter(function() {  return 条件表达式(true => 选项就会返回插入新数组) false => 就不返回 })
+>            // 第二种
+>            // this.list = this.list.filter(function (item, index) { return index !== i }) // 找出删除数据之外的所有的数据 
+>            // 第三种
+>            this.list = this.list.filter((item, index) => index !== i)
+>          }
+>        }
+>```
+>
+>
 
 ## 基础-过滤器-过滤器的分析及全局-局部过滤器
 
 >**`目标`**: 了解过滤器的功能 作用以及作用场景
 >
->* 场景: data中的数据格式(日期格式/货币格式/大小写等)需要数据时
->* 使用位置:{{}}和v-bind="表达式"
->* 具体用法:{{msg | 过滤器名字}}
+>* 场景: data中的数据格式(日期格式/货币格式/大小写等)需要数据时 将原始数据  =>  过滤器 => 显示数据 (**`并不会改变原始数据`**)
+>* 使用位置:{{ }}和v-bind="表达式"
+>* 具体用法:{{ msg | 过滤器名字 }}  | 我们称之为**`管道`**
 >* 分类:  过滤器分为**`局部`**和**`全局`**
 >
 >全局过滤器:  一旦注册, 在**`所有`**的Vue实例或者组件实例都可以使用
 >
 >局部过滤器: **`只能`**在注册的Vue或者组件实例上使用
 >
+>注意**`: 全局过滤器应该在Vue实例化之前注册`**
+>
 >全局注册的方式 :  Vue.filter(过滤器名称,  **`过滤器函数`**)  
 >
+>**`过滤器必须有返回值`**
+>
 >```js
->Vue.filter("toUpper", function(value) {
-> return value.charAt(0).toUpperCase() + value.substr(1);
->});// 过滤器核心代码
+>        // 全局过滤器 可以被所有的vue实例或者组件实例使用
+>        // 局部过滤器 注册在实例上的 只能在注册的实例上使用
+>        // 注意: 全局过滤器应该在Vue实例化之前注册
+>        // 语法: Vue.filter(名称, 函数)
+>        Vue.filter("changeName", function (value) {
+>            // 过滤器函数 => 王际霖 => 王建霖
+>            // map 和filter一样都是得到新数组
+>            return value.split('').map(function (item, index) {
+>                if (index === 1) {
+>                    return "建"
+>                }
+>                return item
+>            }).join("")
+>        })
 >```
 >
 >局部注册的方式     filters(实例选项) : {  过滤器名称 :  **`过滤器函数`**  }
 >
 >```js
->filters: {
->    toUpper(value) {
->      return value.charAt(0).toUpperCase() + value.substr(1);
->    }
->  }
+>            filters: {
+>                // 对象 value代表 管道前面的表达式传递的值
+>                changeName2: function (value) {
+>                    return value.split('').map(function (item, index) {
+>                        if (index === 2) {
+>                            return "战"
+>                        }
+>                        return item
+>                    }).join("")
+>                }
+>            }
 >```
 >
 >过滤器函数的第一个参数 是 **`管道`**前面的计算结果值
@@ -984,28 +1033,83 @@ v-model是Vuejs双向数据流的体现
 
 **`任务`**  尝试做一个将abc转成Abc的过滤器吧 (全局/局部)
 
+```vue
+    <div id="app">
+        <p>{{ str |  transUpper}}</p>
+        <input type="text" v-model="str">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        // 做一个 abc 转成 Abc的例子
+        // Vue.filter("transUpper", function (value) {
+        //     return value.charAt(0).toUpperCase() + value.substr(1)
+        // })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                str: 'abc'
+            },
+            methods: {},
+            filters: {
+                transUpper: function (value) {
+                    return value.charAt(0).toUpperCase() + value.substr(1)
+                }
+            }
+        });
+    </script>
+```
+
+
+
 ### 过滤器的串联和参数传递
 
->  过滤器可以传递参数,第一个参数永远是前面传递过来的过滤值, 从第二个参数开始就是传递的过滤器参数
+>  过滤器可以传递参数,第一个参数**`永远`**是前面传递过来的过滤值, 从第二个参数开始就是传递的过滤器参数
+>
+>  ```vue
+>  {{  msg | 过滤器名称(1,2,3) }}
+>  ```
 
 >  过滤器也可以多个串行起来并排使用  用法就是 用多个 **`管道`** 间隔
+>
+>  ```vue
+>  {{ msg | 过滤器1 | 过滤器2 }}
+>  ```
 
 **`任务`**  尝试实现一个过滤器, 根据传入的**`索引值`** 找到对应的字符串 转成大写 并显示
 
 ```js
-// index为传入的参数 
-toUpper(value, index) {
-         return value
-           .split("")
-           .map(function(item, i) {
-             if (i === index) {
-               return item.toUpperCase();
-             }
-             return item;
-           })
-           .join("");
-       }
-} // 根据传入的索引找到对应的字母换成大写字母
+  <div id="app">
+        <!-- 过滤器串联 -->
+        <p>{{ name | transUpper(3) | reverseStr }}</p>
+        <input type="text" v-model="name">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'abc'
+            },
+            methods: {},
+            filters: {
+                // value => 过滤器的第一个参数  => 管道前面 表达式计算的值
+                transUpper: function (value, i) {
+                    // return value + '同学,How do you feel ?'
+                    return value.split("").map(function (item, index) {
+                        if (index === i) {
+                            // 如果找到了第n个 就把第n个转成大写
+                            return item.toUpperCase()
+                        }
+                        return item  // 别的字符不动
+                    }).join("")
+                },
+                // 字符串翻转的过滤器 必须要返回
+                reverseStr(value) {
+                    return value.split("").reverse().join("")
+                }
+            }
+        });
+    </script>
 ```
 
 ## 基础-表格案例-使用过滤器完成日期 格式处理
@@ -1023,20 +1127,25 @@ toUpper(value, index) {
 >​       4 .  使用过滤器
 >
 >```js
->formatDate(value, format) {
->  return moment(value).format(format);
->}  // 过滤器代码
+>      filters: {
+>        // 格式化日期的过滤器 value就是我们的日期
+>        formatDate(value) {
+>          return moment(value).format("YYYY-MM-DD HH:mm:ss")
+>        }
+>      }
 >```
 >
 >**`路径`**: 参照实现代码
 
 ## 基础-ref 操作 DOM
 
+vuejs是以数据为中心, 几乎不用操作dom, 但是有的情况还是需要
+
 >**`目标`**掌握如何通过ref来获取dom对象
 >
 >* 作用: 通过ref特性可以获取元素的dom对象
 >
->* 使用:  给元素定义 ref属性, 然后通过$refs.名称 来获取dom对象
+>* 使用:  给元素定义 ref属性, 然后通过**`$refs`**.**`名称`** 来获取dom对象
 >
 >```html
 ><input type="text" ref="myInput" /> // 定义ref
@@ -1045,7 +1154,7 @@ toUpper(value, index) {
 >
 >```js
 >focus() {
->      this.$refs.myInput.focus();
+>     this.$refs.myInput.focus();
 >}  // 获取dom对象 聚焦
 >```
 >
@@ -1057,10 +1166,48 @@ toUpper(value, index) {
 >4. 按钮事件中通过ref获取input的value内容
 >
 >**`路径`**: 参照实现代码
+>
+>**`注意`**:   项目1 项目2 期间 => ref => ref不仅仅可以作用在h5标签上,还可以作用在 **`组件`**上 =>组件对象
+>
+>```vue
+>    <div id="app">
+>        <!-- 写入一个input标签 -->
+>        <!-- 定义一个ref属性 -->
+>        <input type="text" ref="myInput" />
+>        <!-- <div></div>
+>        <p></p>
+>        <span></span>
+>        <img src="" alt=""> -->
+>        <button @click="getValue">按钮</button>
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {
+>                name: ''
+>            },
+>            methods: {
+>                getValue() {
+>                    //  获取 input的value内容
+>                    alert(this.$refs.myInput.value)
+>                }
+>            }
+>        });
+>    </script>
+>```
+>
+>
 
-## 基础-自定义指令-全局/局部自定义指令
+## 基础-自定义指令-全局.局部自定义指令
+
+全局 => 所有vue实例都可用
+
+局部 => 只有当前实例可用
 
 > **`目标`**掌握如何全局/局部自定义一个指令
+>
+> v-text/v-html v-if/v-else /v-show/ v-on/v-bind/v-model/v-cloak/v-once/v-pre/v-for  系统指令
 >
 > 除了可以使用vue给的系统指令,我们也可以自定义指令
 >
@@ -1075,7 +1222,7 @@ toUpper(value, index) {
 >
 > })
 >
-> * **`局部自定义指令`** : 
+> * **`局部自定义指令`** :  注册在 实例的选项上
 >
 >   directives: {
 >
@@ -1109,6 +1256,32 @@ Vue.directive("focus", {
 ```
 
 >**`任务`** 实现一个可以自动聚焦input的自定义指令(全局/局部)v-focus
+>
+>```vue
+>    <div id="app">
+>        <input v-focus type="text">
+>    </div>
+>    <script src="./vue.js"></script>
+>    <script>
+>        var vm = new Vue({
+>            el: '#app',
+>            data: {},
+>            methods: {},
+>            directives: {
+>                "focus": {
+>                    // inserted 当指令作用的 元素被创建的时候执行
+>                    inserted(dom) {
+>                        // dom就是一个表单的对象
+>                        dom.focus() // 调用聚焦的方法
+>                    },
+>                }
+>            }
+>        });
+>    </script>
+>    <!-- 实现一个自动聚焦的指令  只能作用在表单上 -->
+>```
+>
+>
 
 ## 基础-表格案例-使用自定义指令完成自动获取焦点功能
 
@@ -1118,9 +1291,13 @@ Vue.directive("focus", {
 
 > **`目标`** 掌握实例选项中计算属性的基本含义
 >
-> * 场景:当表达式过于复杂的情况下 可以采用计算属性 对于任何复杂逻辑都可以采用计算属性
+> 例子: **`翻转一个data中的字符串 显示在页面上`**
 >
-> * 使用: 在Vue实例选项中 定义 computed:{ 计算属性名: **`带返回值`**的函数 }
+> * 场景:当表达式过于复杂的情况下 可以采用计算属性进行封装 对于任何复杂逻辑都可以采用计算属性
+>
+> 需要在页面上展示**`过于复杂的计算结果`**的时候, 可以**`考虑封装计算属性`**
+>
+> * 使用: 在Vue实例选项中 定义 **`computed`**:{ 计算属性名: **`带返回值`**的函数 }
 >
 > * 说明: 计算属性的值 依赖 数据对象中的值  数据对象发生改变 => 计算属性发生改变=> 视图改变
 >
@@ -1128,29 +1305,34 @@ Vue.directive("focus", {
 >
 > * methods方法和计算属性的区别
 >
-> * 1 使用时 方法必须写括号**`()`**
+> * 1 使用时 方法必须写括号**`()`**,计算属性直接写 计算属性名
 >
 > * 2 计算属性有**`缓存机制`** => 计算属性依赖 data中的数据 => 第一次执行计算属性完毕之后,计算属性会将计算结果放入缓存 => 第二次执行计算属性时 => 发现计算属性依赖的数据没有变化 => 从缓存中获取缓存,不再执行计算属性逻辑
 >
 > * 计算属性可以抽提复杂的逻辑 /还比方法的效率更高
 >
->   ```html
->   computed: {
->     nameReverse() {
->         return this.name.split("").reverse().join("");
->      }
->   } 
+>   ```js
+>               // 所有的计算属性都写在computed中
+>               computed: {
+>                   // 效率是更高的 
+>                   // 计算属性不能和方法重名 不能和data数据重名
+>                   reverseStr() {
+>                       console.log("执行计算属性")
+>                     // this 指向vm实例 计算属性必须有返回值
+>                       return this.name.split("").reverse().join("")
+>                 }
+>               }
 >   ```
->
+>   
 >   计算属性 和 methods方法的区别: 
->
+>   
 >   * 计算属性不需要调用形式的写法  而methods方法必须采用 方法() 调用的形式
 >   * 计算属性依赖data中的数据变化,如果data并没有发生变化,则计算属性则会取缓存的结果,
 >   * methods不论data变化与否都会重新调用
 >
-> **`任务`:**通过计算属性实现字符串的翻转
+> **`任务`:**通过计算属性 实现工资的计算
 
-## 表格案例-用计算属性实现商品搜索
+## 表格案例-用计算属性实现数据搜索
 
 >**`目标-任务`**在表格案例中使用计算属性实现商品搜索`
 >
@@ -1169,19 +1351,26 @@ Vue.directive("focus", {
 >​      4  计算属性替换原有得列表数据
 >
 >```js
->computed: {
->// 实现计算属性
->newList() {
-> if (!this.searchValue) return this.list;
-> return this.list.filter(item => {
->   return item.name.startsWith(this.searchValue);
-> });
->}
->}
+>  // 定义计算属性
+>      computed: {
+>        // 通过 输入的搜索内容 和列表内容 筛选出我们要的结果
+>        // 计算属性必须要有返回值
+>        filterList() {
+>          // this指向 vm实例
+>          //   this.list // 数组
+>          // 关键字
+>          // 搜索功能 在一个数组中 搜索和关键字相关的数据
+>          return this.list.filter((item) => {
+>            // 筛选条件 返回一个条件表达式
+>            return item.name.includes(this.searchVal)
+>          })
+>        }
+>      }
 >```
 >
->用到了 数组的filter筛选功能  和 字符串的 startsWith 校验功能
+>用到了 数组的filter筛选功能  和 字符串的 includes校验功能
 >
 
 当data中无法完成复杂逻辑时,通通可以在**`计算属性`**中实现
 
+计算属性比 方法 的性能更高 => 缓存机制
